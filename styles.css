@@ -37,3 +37,7 @@ table {
   .piece {
     height: 100px;
   }
+
+  header {
+    font-size: 64px;
+  }
