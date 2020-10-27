@@ -23,19 +23,6 @@ table {
     background-color: #999;
   }
   
-  tbody {
-    counter-reset: rowNumber;
-  }
-  
-  tr {
-    counter-increment: rowNumber;
-    counter-reset: cellNumber;
-  }
-  
-  td {
-    counter-increment: cellNumber;
-  }
-  
   td::after {  
     color: black;
     font-size: x-large;

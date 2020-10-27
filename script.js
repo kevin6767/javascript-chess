@@ -37,12 +37,6 @@ function createBoard(params) {
                 cell.insertAdjacentHTML('beforeend', '<img class="piece" draggable="true" id="' + urls4[j] + '" src="' + urls4[j] + '">');
             }
             
-            
-            
-            
-            
-            
-        
                 if (j%2 == i% 2) {
                     cell.setAttribute('id','white')
                 } else {
@@ -63,52 +57,54 @@ function createBoard(params) {
         
     }
     document.body.appendChild(board)
-addEventListeners(document.querySelectorAll('img'), 'dragstart', (e) => {
-    dragData(e, { id: e.target.id });
-});
 
-addEventListeners(document.querySelectorAll('td'), 'drop', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    var data = dragData(e);
-    e.currentTarget.classList.remove('allowed');
-    e.currentTarget.classList.remove('denied');
-    var incoming = dragData(e).id;
-    var target = (e.currentTarget.classList.toString().split(' '));
-    // TODO: some rule engine the incoming piece can go to this target or not
-    var allowed = Math.floor(Math.random() * Math.floor(2)); // currently 0 or 1 randomly to test the snippet
-    if(allowed) {
-        e.currentTarget.appendChild(document.getElementById(data.id));
-    } else {
-        // nothing
-    }
-});
+    addEventListeners(document.querySelectorAll('img'), 'dragstart', (e) => {
+        dragData(e, { id: e.target.id });
+    });
 
-addEventListeners(document.querySelectorAll('td'), 'dragover', (e) => {
-e.preventDefault();
-});
+    addEventListeners(document.querySelectorAll('td'), 'drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        var data = dragData(e);
+        e.currentTarget.classList.remove('allowed');
+        e.currentTarget.classList.remove('denied');
+        var incoming = dragData(e).id;
+        var target = (e.currentTarget.classList.toString().split(' '));
+        // TODO: some rule engine the incoming piece can go to this target or not
+        var allowed = true
+        if(allowed) {
+            e.currentTarget.appendChild(document.getElementById(data.id));
+        } else {
+            // nothing
+        }
+    });
 
-addEventListeners(document.querySelectorAll('td'), 'dragenter', (e) => {
-e.preventDefault();
-var incoming = dragData(e).id;
-var target = (e.currentTarget.classList.toString().split(' '));
-// TODO: some rule engine the incoming piece can go to this target or not
-var allowed = Math.floor(Math.random() * Math.floor(2)); // currently 0 or 1 randomly to test the snippet
-if(allowed) {
-    e.currentTarget.classList.add('allowed');
-} else {
-    e.currentTarget.classList.add('denied');
+    addEventListeners(document.querySelectorAll('td'), 'dragover', (e) => {
+        e.preventDefault();
+    });
+
+    addEventListeners(document.querySelectorAll('td'), 'dragenter', (e) => {
+        e.preventDefault();
+        var incoming = dragData(e).id;
+        var target = (e.currentTarget.classList.toString().split(' '));
+        // TODO: some rule engine the incoming piece can go to this target or not
+        var allowed = true; 
+        if(allowed) {
+            e.currentTarget.classList.add('allowed');
+        } else {
+            e.currentTarget.classList.add('denied');
+        }
+    });
+
+    addEventListeners(document.querySelectorAll('td'), 'dragleave', (e) => {
+        e.preventDefault();
+        e.currentTarget.classList.remove('allowed');
+        e.currentTarget.classList.remove('denied');
+    });
+
+
 }
-});
 
-addEventListeners(document.querySelectorAll('td'), 'dragleave', (e) => {
-e.preventDefault();
-e.currentTarget.classList.remove('allowed');
-e.currentTarget.classList.remove('denied');
-});
-
-
-}
 
     
 
