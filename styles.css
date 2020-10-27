@@ -1,0 +1,52 @@
+table {
+    empty-cells: show;
+  }
+  
+  td {
+    width: 7em;
+    height: 7em;
+    line-height: 2em;
+    text-align: center;
+    border: 1px solid #000;
+    padding: 20px;
+    position: relative;
+  }
+  
+  tbody tr:nth-child(odd) td:nth-child(even),
+  tbody tr:nth-child(even) td:nth-child(odd) {
+    color: #fff;
+    background-color: #00f;
+  }
+  
+  tbody tr:nth-child(even) td:nth-child(even),
+  tbody tr:nth-child(odd) td:nth-child(odd) {
+    background-color: #999;
+  }
+  
+  tbody {
+    counter-reset: rowNumber;
+  }
+  
+  tr {
+    counter-increment: rowNumber;
+    counter-reset: cellNumber;
+  }
+  
+  td {
+    counter-increment: cellNumber;
+  }
+  
+  td::after {  
+    color: black;
+    font-size: x-large;
+  }
+  
+  td[id^="grey"]{
+    background-color: grey;
+    position: relative;
+    
+  }
+
+  .piece {
+    height: 100px;
+  }
