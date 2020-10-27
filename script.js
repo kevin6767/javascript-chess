@@ -1,8 +1,5 @@
 var img = document.querySelectorAll('img')
 var td = document.querySelectorAll('td')
-
-
-
 var test = true;
 var row;
 var cell;
@@ -13,6 +10,23 @@ var urls2 = ["image/a8.png", "image/a9.png", "image/a10.png", "image/a11.png", "
 var urls3 = ["image/a16.png", "image/a17.png", "image/a18.png", "image/a19.png", "image/a20.png", "image/a21.png", "image/a22.png", "image/a23.png"]
 var urls4 = ["image/a24.png", "image/a25.png", "image/a26.png", "image/a27.png", "image/a28.png", "image/a29.png", "image/a30.png", "image/a31.png"]
 
+/*
+### Black Pieces ###
+b_pawns class = 9-16
+b_rooks class = 1 & 8
+b_knight class = 2 & 7
+b_bishop class = 3 & 6
+b_queen class = 4
+b_king class = 5
+
+### White Pieces ###
+w_pawns class = 49-56
+w_rooks class = 57 & 64
+w_knights class = 58 & 63
+w_bishops class = 59 & 62
+w_queen class = 61
+w_king class = 60
+*/
 function createBoard(params) {
     if (test) {
         console.log('---Creating the board---')
@@ -23,7 +37,7 @@ function createBoard(params) {
         row = document.createElement('tr')
         for (let j = 0; j < 8; j++) {
             cell = document.createElement('td');
-            cell.className = i;
+            cell.className = p;
             if (i < 1) {
                 cell.insertAdjacentHTML('beforeend', '<img class="piece" draggable="true" id="' + urls1[j] + '" src="' + urls1[j] + '">');
             }
@@ -57,7 +71,11 @@ function createBoard(params) {
         
     }
     document.body.appendChild(board)
+    listening();
+}
 
+
+function listening(params) {
     addEventListeners(document.querySelectorAll('img'), 'dragstart', (e) => {
         dragData(e, { id: e.target.id });
     });
@@ -102,12 +120,7 @@ function createBoard(params) {
         e.currentTarget.classList.remove('denied');
     });
 
-
 }
-
-
-    
-
 function addEventListeners(list, event, fn) {
     for (var i = 0, len = list.length; i < len; i++) {
         list[i].addEventListener(event, fn, false);
@@ -127,6 +140,11 @@ function dragData(event, data) {
         return response;
     }
 }
+
+
+    
+
+
 
 
 createBoard();
