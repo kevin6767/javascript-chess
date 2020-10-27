@@ -1,8 +1,8 @@
-# https://kevin6767.github.io/javascript-chess/
+### https://kevin6767.github.io/javascript-chess/
 
 
-What I want to do
-: I want to create a chessboard application that allows you to play against a very primitive computer. I want to build a board completely from scratch and build the chess engine from scratch as well. Formulating my own functions to handle each movement and capturing event that happens during the game. 
+# What I want to do 
+ I want to create a chessboard application that allows you to play against a very primitive computer. I want to build a board completely from scratch and build the chess engine from scratch as well. Formulating my own functions to handle each movement and capturing event that happens during the game. 
 
 - [x] Create a function that generate the board
 - [x] Create css rules for alternating the cells colors
