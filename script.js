@@ -1,4 +1,3 @@
-document.addEventListener('DOMContentLoaded',() => {
 const game = document.querySelector('.grid')
 let board = []
 
@@ -65,9 +64,4 @@ function genPawns(params) {
 
 
 
-
-
-
-
 genBoard();
-})
