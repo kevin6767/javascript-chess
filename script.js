@@ -100,14 +100,12 @@ document.querySelectorAll('.square').forEach(function(el) {
 
 
 function addselected(selected){
-    console.log('---addselected---')
     clearArr(moveList)
     var select = selected.path[0]
     moveList.push(select)
 }
 
 function addtarget(target){
-    console.log('---addtarget---')
     if (target.path.length === 7){
         var tar = target.path[1]
     }else{
@@ -115,7 +113,6 @@ function addtarget(target){
     }
 
     moveList.push(tar)
-    console.log(moveList)
     moveBy(moveList)
 }
 
