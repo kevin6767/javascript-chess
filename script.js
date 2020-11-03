@@ -2,6 +2,9 @@ let game = document.querySelector('.grid')
 let board = []
 let piece = 'piece'
 let allowed = true; // set to true to allow infite moves
+const moveList = []
+
+
 
 function genBoard(params) {
     let classNames = ["white", "black"];
@@ -87,79 +90,45 @@ genBoard();
 
 
 
+document.querySelectorAll('img').forEach(function(el) {
+    el.addEventListener('click' , addselected)
+})
 
-/*
-todo : clean up this terrible 2 year old code and learn how to move stuff around in functions and
-not be a total dummy
+document.querySelectorAll('.square').forEach(function(el) {
+    el.addEventListener('click', addtarget)
+})
 
 
+function addselected(selected){
+    console.log('---addselected---')
+    var select = selected.path[0]
+    moveList.push(select)
+}
+
+function addtarget(target){
+    console.log('---addtarget---')
+    if (target.path.length === 7){
+        var tar = target.path[1]
+    }else{
+        var tar = target.path[0]
+    }
+
+    moveList.push(tar)
+    moveBy(...moveList)
+}
 
 
-
-
-*/
-var images = document.querySelectorAll('img')
-for (let index = 0; index < images.length; index++) {
-    images[index].setAttribute('id', 'piece ' + index)
+function moveBy(...moveList) {
+    console.log('---moveBy---')
+    let moveTarg = moveList[2]
+    let moveSel = moveList[0]
+    if (typeof moveTarg === 'undefined') {
+        console.log('not working')
+    }else{
+        moveTarg.appendChild(moveSel)
+        moveList = []
+    }
+    console.log(moveList)
     
-}
-addEventListeners(document.querySelectorAll('img'), 'dragstart', (e) => {
-    dragData(e, { id: e.target.id });
-});
-
-addEventListeners(document.querySelectorAll('.square'), 'drop', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    var data = dragData(e);
-    // TODO: some rule engine the incoming piece can go to this target or not
-    if(allowed) {
-        e.currentTarget.appendChild(document.getElementById(data.id));
-    } else {
-        // nothing
-    }
-});
-
-addEventListeners(document.querySelectorAll('.square'), 'dragover', (e) => {
-    e.preventDefault();
-});
-
-addEventListeners(document.querySelectorAll('.square'), 'dragenter', (e) => {
-    e.preventDefault();
-    // TODO: some rule engine the incoming piece can go to this target or not
-    if(allowed) {
-        e.currentTarget.classList.add('allowed');
-    } else {
-        e.currentTarget.classList.add('denied');
-    }
-});
-
-addEventListeners(document.querySelectorAll('.square'), 'dragleave', (e) => {
-    e.preventDefault();
-    e.currentTarget.classList.remove('allowed');
-    e.currentTarget.classList.remove('denied');
-});
-
-
-function addEventListeners(list, event, fn) {
-for (var i = 0, len = list.length; i < len; i++) {
-    list[i].addEventListener(event, fn, false);
-
-}
-}
-
-
-function dragData(event, data) {
-if (data) {
-    event.dataTransfer.setData('text', JSON.stringify(data));
-} else {
-    var response = event.dataTransfer.getData('text');
-    try {
-        response = JSON.parse(response);
-    } catch (e) {
-        response = {};
-    }
-    console.log(response)
-    return response;
-}
 }
 
