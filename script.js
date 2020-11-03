@@ -2,7 +2,7 @@ let game = document.querySelector('.grid')
 let board = []
 let piece = 'piece'
 let allowed = true; // set to true to allow infite moves
-const moveList = []
+var moveList = []
 
 
 
@@ -101,6 +101,7 @@ document.querySelectorAll('.square').forEach(function(el) {
 
 function addselected(selected){
     console.log('---addselected---')
+    clearArr(moveList)
     var select = selected.path[0]
     moveList.push(select)
 }
@@ -114,11 +115,12 @@ function addtarget(target){
     }
 
     moveList.push(tar)
-    moveBy(...moveList)
+    console.log(moveList)
+    moveBy(moveList)
 }
 
 
-function moveBy(...moveList) {
+function moveBy(moveList) {
     console.log('---moveBy---')
     let moveTarg = moveList[2]
     let moveSel = moveList[0]
@@ -126,9 +128,13 @@ function moveBy(...moveList) {
         console.log('not working')
     }else{
         moveTarg.appendChild(moveSel)
-        moveList = []
+        
     }
     console.log(moveList)
     
+    
 }
 
+function clearArr(moveList) {
+    moveList.length = 0
+}
