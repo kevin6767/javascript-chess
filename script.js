@@ -200,3 +200,8 @@ function moveByPawn(sel,targ) {
     
     }
 }   
+
+// Handling the movement for the rest of the peices, just check the inner.html for each element and add each one too an array by 
+// checking their id's. 
+
+// bishop will me a moduls of 9 or 7since it needs 9 tiles to move diagnol
