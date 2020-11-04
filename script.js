@@ -92,7 +92,6 @@ function genPawns(params) {
     for (let index = 8; index < 16; index++) {
         board[index].innerHTML = '<img src=./image/b_pawn.png class=pawn>'
         board[index].setAttribute('draggable','true')
-       
         
     }
     for (let index = 48; index < 56; index++) {
@@ -111,6 +110,12 @@ genBoard();
 document.querySelectorAll('img').forEach(function(el) {
     el.addEventListener('click' , addselected)
     el.classList.add('original')
+    var check = parseInt(el.parentElement.id)
+    if (check < 63 && check > 48) {
+        el.classList.add('w_piece')
+    }else{
+        el.classList.add('b_piece')
+    }
 })
 
 document.querySelectorAll('.square').forEach(function(el) {
@@ -167,41 +172,72 @@ function clearArr(moveList) {
     moveList.length = 0
 }
 
-// Handling capturing for the pawn ------- I will need to add or subtract to the idea to make sure it stays inline with the logic
+// Handling capturing for the pawn ------- I will need to add or subtract to the id to make sure it stays inline with the logic
 // below. Other than that, should be pretty easy, just continue to use the id's to work with movement
+
 function moveByPawn(sel,targ) {
     var moveCount = 0;
     var location = parseInt(targ.id)
     var originalLoc = parseInt(sel.parentElement.id)
-    if(sel.classList.contains('original')){
-        if(targ.innerHTML == ''){
-            moveCount++
-            if ((location + 16)/moveCount == originalLoc || (location + 8)/moveCount == originalLoc) {
-                console.log('This can move here!')
-                targ.appendChild(sel)
-                sel.classList.remove('original')
-            }else {
-                console.log('I cannot move here!')
+    // check if the piece is white so the logic works for both ends of the board since we are not working with a 2d Array
+    if (sel.classList.contains('w_piece')) {
+        if(sel.classList.contains('original')){
+            if(targ.innerHTML == ''){
+                moveCount++
+                if ((location + 16)/moveCount == originalLoc || (location + 8)/moveCount == originalLoc) {
+                    console.log('This can move here!')
+                    targ.appendChild(sel)
+                    sel.classList.remove('original')
+                }else {
+                    console.log('I cannot move here!')
+                }
+            }else{
+                console.log('handle capturing')
             }
+            
         }else{
-            console.log('handle capturing')
-        }
-        
-    }else{
-        if(targ.innerHTML == ''){
-            moveCount++
-            if ((location + 8)/moveCount == originalLoc) {
-                console.log('This can move here!')
-                targ.appendChild(sel)
-            }else {
-                console.log('I cannot move here!')
+            if(targ.innerHTML == ''){
+                moveCount++
+                if ((location + 8)/moveCount == originalLoc) {
+                    console.log('This can move here!')
+                    targ.appendChild(sel)
+                }else {
+                    console.log('I cannot move here!')
+                }
             }
-    }
-    
-    }
+        }
+    }else {
+        if(sel.classList.contains('original')){
+            if(targ.innerHTML == ''){
+                moveCount++
+                if ((location - 16)*moveCount == originalLoc || (location - 8)*moveCount == originalLoc) {
+                    console.log('This can move here!')
+                    targ.appendChild(sel)
+                    sel.classList.remove('original')
+                }else {
+                    console.log('I cannot move here!')
+                }
+            }else{
+                console.log('handle capturing')
+            }
+            
+        }else{
+            if(targ.innerHTML == ''){
+                moveCount++
+                if ((location - 8)*moveCount == originalLoc) {
+                    console.log('This can move here!')
+                    targ.appendChild(sel)
+                }else {
+                    console.log('I cannot move here!')
+                }
+            }
+        }
+    } 
 }   
 
 // Handling the movement for the rest of the peices, just check the inner.html for each element and add each one too an array by 
 // checking their id's. 
 
 // bishop will me a moduls of 9 or 7since it needs 9 tiles to move diagnol
+
+// Use of nextSibling maybe, to check what element is next to the targ cell
