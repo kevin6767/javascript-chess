@@ -1,16 +1,16 @@
 let game = document.querySelector('.grid')
 let board = []
-let piece = 'piece'
+
 let allowed = true; // set to true to allow infite moves
 var moveList = []
-
+const piecesClass = ['pawn','knight','rook','bishop','queen','king']
 
 
 function genBoard(params) {
     let classNames = ["white", "black"];
     for(var i=0; i<64; i++){
         var square = document.createElement("div");
-        square.setAttribute('id', 'board' + i)
+        square.setAttribute('id', i)
         square.className += 'square '
         board.push(square)
         if (i && i%8 === 0){ 
@@ -32,56 +32,74 @@ function genPieces(params) {
     genPawns()
 }
 function genRooks(params) {
-    board[0].innerHTML = '<img src=./image/b_rook.png>'
+    board[0].innerHTML = '<img src=./image/b_rook.png class=rook>'
     board[0].setAttribute('draggable','true')
-    board[7].innerHTML = '<img src=./image/b_rook.png>'
+    
+    board[7].innerHTML = '<img src=./image/b_rook.png class=rook>'
     board[7].setAttribute('draggable','true')
-    board[56].innerHTML = '<img src=./image/w_rook.png>'
+    
+    board[56].innerHTML = '<img src=./image/w_rook.png class=rook>'
     board[56].setAttribute('draggable','true')
-    board[63].innerHTML = '<img src=./image/w_rook.png>' 
-    board[63].setAttribute('draggable','true')  
+    
+    board[63].innerHTML = '<img src=./image/w_rook.png class=rook>' 
+    board[63].setAttribute('draggable','true')
+    
 }
 function genKnights(params) {
-    board[1].innerHTML = '<img src=./image/b_knight.png>'
+    board[1].innerHTML = '<img src=./image/b_knight.png class=knight>'
     board[1].setAttribute('draggable','true')
-    board[6].innerHTML = '<img src=./image/b_knight.png>'
+    
+    board[6].innerHTML = '<img src=./image/b_knight.png class=knight>'
     board[6].setAttribute('draggable','true')
-    board[57].innerHTML = '<img src=./image/w_knight.png>'
+    
+    board[57].innerHTML = '<img src=./image/w_knight.png class=knight>'
     board[57].setAttribute('draggable','true')
-    board[62].innerHTML = '<img src=./image/w_knight.png>'
+    
+    board[62].innerHTML = '<img src=./image/w_knight.png class=knight>'
     board[62].setAttribute('draggable','true')
+   
 }
 function genBishops(params) {
-    board[2].innerHTML = '<img src=./image/b_bishop.png>'
+    board[2].innerHTML = '<img src=./image/b_bishop.png class=bishop>'
     board[2].setAttribute('draggable','true')
-    board[5].innerHTML = '<img src=./image/b_bishop.png>'
+    board[5].innerHTML = '<img src=./image/b_bishop.png class=bishop>'
     board[5].setAttribute('draggable','true')
-    board[58].innerHTML = '<img src=./image/w_bishop.png>'
+    
+    board[58].innerHTML = '<img src=./image/w_bishop.png class=bishop>'
     board[58].setAttribute('draggable','true')
-    board[61].innerHTML = '<img src=./image/w_bishop.png>'
+    
+    board[61].innerHTML = '<img src=./image/w_bishop.png class=bishop>'
     board[61].setAttribute('draggable','true')
+   
 }
 function genKings(params) {
-    board[4].innerHTML = '<img src=./image/b_king.png>'
+    board[4].innerHTML = '<img src=./image/b_king.png class=king>'
     board[4].setAttribute('draggable','true')
-    board[60].innerHTML = '<img src=./image/w_king.png>'
+    
+    board[60].innerHTML = '<img src=./image/w_king.png class=king>'
     board[60].setAttribute('draggable','true')
+   
 }
 function genQueens(params) {
-    board[3].innerHTML = '<img src=./image/b_queen.png>'
+    board[3].innerHTML = '<img src=./image/b_queen.png class=queen>'
     board[3].setAttribute('draggable','true')
-    board[59].innerHTML = '<img src=./image/w_queen.png>'
+    
+    board[59].innerHTML = '<img src=./image/w_queen.png class=queen>'
     board[59].setAttribute('draggable','true')
+    
 }
 function genPawns(params) {
     for (let index = 8; index < 16; index++) {
-        board[index].innerHTML = '<img src=./image/b_pawn.png>'
+        board[index].innerHTML = '<img src=./image/b_pawn.png class=pawn>'
         board[index].setAttribute('draggable','true')
+       
         
     }
     for (let index = 48; index < 56; index++) {
-        board[index].innerHTML = '<img src=./image/w_pawn.png>'
+        board[index].innerHTML = '<img src=./image/w_pawn.png class=pawn>'
         board[index].setAttribute('draggable','true')
+        
+        
         
     }
 }
@@ -92,6 +110,7 @@ genBoard();
 
 document.querySelectorAll('img').forEach(function(el) {
     el.addEventListener('click' , addselected)
+    el.classList.add('original')
 })
 
 document.querySelectorAll('.square').forEach(function(el) {
@@ -118,20 +137,66 @@ function addtarget(target){
 
 
 function moveBy(moveList) {
-    console.log('---moveBy---')
+
     let moveTarg = moveList[2]
     let moveSel = moveList[0]
     if (typeof moveTarg === 'undefined') {
-        console.log('not working')
+        console.log('waiting')
     }else{
-        moveTarg.appendChild(moveSel)
-        
+        if (moveSel.classList.contains('pawn')) {
+            console.log('I selected a pawn')
+            moveByPawn(moveSel, moveTarg)
+        } else if(moveSel.classList.contains('knight')){
+            console.log('I selected a knight')
+        }else if(moveSel.classList.contains('rook')){
+            console.log('I selected a rook')
+        }else if (moveSel.classList.contains('bishop')){
+            console.log('I selected a bishop')
+        }else if(moveSel.classList.contains('queen')){
+            console.log('I selected a queen')
+        }else if(moveSel.classList.contains('king')) {
+            console.log('I selected a king')
+        }else{
+            console.log('if else if did not work')
+        }
     }
-    console.log(moveList)
-    
     
 }
 
 function clearArr(moveList) {
     moveList.length = 0
 }
+
+// Handling capturing for the pawn ------- I will need to add or subtract to the idea to make sure it stays inline with the logic
+// below. Other than that, should be pretty easy, just continue to use the id's to work with movement
+function moveByPawn(sel,targ) {
+    var moveCount = 0;
+    var location = parseInt(targ.id)
+    var originalLoc = parseInt(sel.parentElement.id)
+    if(sel.classList.contains('original')){
+        if(targ.innerHTML == ''){
+            moveCount++
+            if ((location + 16)/moveCount == originalLoc || (location + 8)/moveCount == originalLoc) {
+                console.log('This can move here!')
+                targ.appendChild(sel)
+                sel.classList.remove('original')
+            }else {
+                console.log('I cannot move here!')
+            }
+        }else{
+            console.log('handle capturing')
+        }
+        
+    }else{
+        if(targ.innerHTML == ''){
+            moveCount++
+            if ((location + 8)/moveCount == originalLoc) {
+                console.log('This can move here!')
+                targ.appendChild(sel)
+            }else {
+                console.log('I cannot move here!')
+            }
+    }
+    
+    }
+}   
